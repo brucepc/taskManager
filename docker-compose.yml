@@ -1,0 +1,22 @@
+version: '2'
+services:
+  app:
+    image: brucepc/symfony
+    ports:
+      - 9000
+    volumes:
+      - ./src:/var/www
+    environment:
+      - SYMFONY_ENV:dev
+      - SYMFONY_DEBUG:1
+  proxy:
+    image: nginx
+    volumes:
+      - ./env/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - app
+    ports:
+      - 80:80
+    depends_on:
+      - app
+        
